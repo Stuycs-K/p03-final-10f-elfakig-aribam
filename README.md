@@ -7,7 +7,10 @@ Ginwan Elfaki and Moontaha Ariba
        
 ### Project Description:
 
-We creating the game Wordle  to test different starter words by using multiple clients connecting to one server. The goal is to see which player completes the game first, which will determine which starter word is better. 
+We creating the game Wordle against the user and server. 
+
+#### Features: 
+Testing different starter words by creaing multiple clients to connecting to one server, then reaping those subservers to determine which of those starter words is better. 
   
 ### Instructions:
 
@@ -16,4 +19,4 @@ How does the user interact with this program? (CHANGE THIS!!!!!)
 
 ### Resources/ References:
 
-list here(CHANGE THIS!!!!!)
+ncurses?
