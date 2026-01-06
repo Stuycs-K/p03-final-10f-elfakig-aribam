@@ -7,7 +7,7 @@ Ginwan Elfaki and Moontaha Ariba
        
 ### Project Description:
 
-Explain what is this project. (CHANGE THIS!!!!!)
+We creating the game Wordle  to test different starter words by using multiple clients connecting to one server. The goal is to see which player completes the game first, which will determine which starter word is better. 
   
 ### Instructions:
 
