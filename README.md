@@ -11,7 +11,15 @@ We creating the game Wordle against the user and server.
 
 #### Features: 
 Testing different starter words by creaing multiple clients to connecting to one server, then reaping those subservers to determine which of those starter words is better. 
-  
+
+#### Files
+##### client.c/h
+##### networking.c/h
+##### read.c/h -> read words from words.txt
+##### server.c/h
+##### write.c/h -> edit to words.txt to remove words
+##### wordle.c/h
+
 ### Instructions:
 
 How does the user install/compile/run the program. (CHANGE THIS!!!!!)
@@ -20,3 +28,4 @@ How does the user interact with this program? (CHANGE THIS!!!!!)
 ### Resources/ References:
 
 ncurses?
+select, to be able to listen to both stdin and sockets
