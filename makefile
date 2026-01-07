@@ -1,5 +1,9 @@
 .PHONY: client server clean
 
+read: read.c errorfile.h
+	gcc -Wall -c read.c
+	@./read.o
+
 compile: client.o server.o networking.o
 	@gcc -o client cliet.o networking.o
 	@gcc -o server server.o networking.o
