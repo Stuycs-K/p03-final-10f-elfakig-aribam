@@ -1,27 +1,8 @@
-.PHONY: client server clean
-
-read: read.c errorfile.h
-	gcc -Wall -c read.c
-	@./read.o
-
-compile: client.o server.o networking.o
-	@gcc -o client cliet.o networking.o
-	@gcc -o server server.o networking.o
-
-client: client
-	@./client
-
-server: server
-	@./server
-
-client.o: client.c networking.h
-	@gcc -Wall -c client.c
-
-server.o: server.c networking.h
-	@gcc -Wall -c server.c
-
-networking.o: networking.c networking.h
-	@gcc -Wall -c networking.c
-
+compile: main.o write.h
+	gcc main.o -o prog
+main.o: main.c
+	gcc -c main.c
+run: prog
+	./prog
 clean:
-	@rm -f *.o server client
+	rm *.o prog
