@@ -14,3 +14,10 @@ This document must be updated daily every time you finish a work session.
 * 5 mins - change of plans: delete write.txt; use a words.csv file; use a library-like structure
 * 4 mins - wrote networking.h
 * 3 mins - fixed merge and branch issues
+* 2 mins - added words.csv
+
+### 2026-01-08
+* 5 mins - seperated work from Ginwan's; I'm working on the wordle game itself being played by a human
+* 5 mins - calculating file size function
+* 10 mins - worked on choosing a word function
+* 5 mins - organized files
