@@ -21,7 +21,7 @@ void chooseWord(char * w) {
     // choose a random line
     int l = rand() % numWords + 1;
 
-    // loop through to get 
+    // loop through to get
     FILE * f = fopen("words.csv", "r");
     if (f == NULL) {
         perror("error opening file.");
@@ -46,10 +46,17 @@ void chooseWord(char * w) {
 
 int main(int argc, char *argv[]){
     srand(time(NULL));
-    char w[7];
+    char w[6];
     chooseWord(w);
 
-    printf("%s\n", w);
+    char buff[6];
+    printf("choose a 5-letter word:\n");
+    fgets(buff, sizeof(buff),stdin);
+    if (sizeof(buff) > 5) {
+        printf("no more than 5 letters!");
+    } else if (sizeof(buff) < 5) {
+        printf("at least 5 letters!");
+    }
 
     return 0;
 }
