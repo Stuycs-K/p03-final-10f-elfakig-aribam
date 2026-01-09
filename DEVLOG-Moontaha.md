@@ -21,3 +21,4 @@ This document must be updated daily every time you finish a work session.
 * 5 mins - calculating file size function
 * 10 mins - worked on choosing a word function
 * 5 mins - organized files
+* 20 mins - chooseWord: returns a random word from the csv file. returns blank some times, returns a random word sometimes.
