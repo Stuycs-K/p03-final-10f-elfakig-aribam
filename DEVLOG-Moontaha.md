@@ -30,3 +30,6 @@ This document must be updated daily every time you finish a work session.
 * 5 mins - checked for null or exit commands
 * 5 mins - refined printed messages
 * 5 mins - organized files
+
+### 2026-01-12
+* 5 mins - organized files, removed unnecessary files, moved info into diff files
