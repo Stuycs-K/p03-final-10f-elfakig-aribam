@@ -1,5 +1,4 @@
 #include <time.h>
-#include "networking.h"
 
 int fileSize() {
     FILE * fp = fopen("words.csv", "r");
@@ -60,15 +59,15 @@ int main(int argc, char *argv[]){
     char w[6];
     chooseWord(w);
     char buff[256];
-    
+
     while (1) {
         printf("choose a 5-letter word:\n");
-        
+
         if (fgets(buff, sizeof(buff), stdin) == NULL) {
             printf("exiting...\n");
             break;
         }
-        
+
         if (strlen(buff) > 6) {
             printf("no more than 5 letters!\n\n");
         } else if (strlen(buff) < 6) {
