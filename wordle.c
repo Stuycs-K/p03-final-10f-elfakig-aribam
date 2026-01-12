@@ -14,13 +14,23 @@ int fileSize() {
 }
 
 int isValid(char * word) { // 0 = valid; 1 = invalid
-    int v = 0;
-    for (int i = 0; word[i]; i++) {
-        if (word[i] < 'A' || word[i] > 'z' || (word[i] > 'Z' && word[i] < 'a')) {
-            v = 1;
+    int v = 1;
+    // start reading the file
+    FILE * f = fopen("words.csv", "r");
+    if (f == NULL) {
+        printf("file not found\n");
+        return -1;
+    }
+    char line[6];
+
+    while (fgets(line, sizeof(line), f)) {
+        if (strncmp(word, line, 5) == 0) {
+            v = 0;
             break;
         }
     }
+
+    fclose(f);
     return v;
 }
 
@@ -74,11 +84,25 @@ int main(int argc, char *argv[]){
         } else if (strlen(buff) < 6) {
             printf("at least 5 letters!\n\n");
         } else {
+<<<<<<< HEAD
             if (!isValid(buff)) {
                 printf("characters only!\n\n");
+=======
+            if (isValid(buff)) {
+                printf("I don't know this word. Try again.\n\n");
+>>>>>>> df3f14f16b346693882d1f959482fc94729dbed8
             } else {
                 break;
             }
+        }
+    }
+
+    for (int guess = 1; guess < 7; guess++) {
+        if (strncmp(w, buff, 5) != 0) {
+            printf("Guess #%d: %s", guess, buff);
+            fgets(buff, sizeof(buff), stdin);
+        } else {
+            printf("correct!\n");
         }
     }
 
