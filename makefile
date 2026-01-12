@@ -1,10 +1,10 @@
 compile: wordle.o
-	gcc wordle.o -o prog
+	@gcc wordle.o -o prog
 
 wordle.o: wordle.c
-	gcc -c wordle.c
+	@gcc -c wordle.c
 
 run: prog
-	./prog
+	@./prog
 clean:
-	rm *.o prog
+	@rm *.o prog
