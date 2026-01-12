@@ -1,4 +1,5 @@
 #include <time.h>
+#include "wordle.h"
 
 int fileSize() {
     FILE * fp = fopen("words.csv", "r");
