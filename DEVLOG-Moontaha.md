@@ -22,3 +22,11 @@ This document must be updated daily every time you finish a work session.
 * 10 mins - worked on choosing a word function
 * 5 mins - organized files
 * 20 mins - chooseWord: returns a random word from the csv file. returns blank some times, returns a random word sometimes.
+
+### 2026-01-09
+* 5 mins - tested existing code, found bugs in chooseWord (works, but chooses the same word twice in a row almost always)
+* 10 mins - worked on main logic to check for validity of word
+* 10 mins - made new function called isValid that checks if word is only characters
+* 5 mins - checked for null or exit commands
+* 5 mins - refined printed messages
+* 5 mins - organized files
