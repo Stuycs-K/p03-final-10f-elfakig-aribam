@@ -4,18 +4,15 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
-#include "read.h"
-#include "write.h"
-#include "errorfile.h"
+#include "wordle.h"
+
+//1. pick a random word
+//2. have computer pick another random word
+//3. check the similairty between the two.
+//4. remove words from the list based on this
 
 int main(){
-  char allwords[30] = "apple batch berry deter hands";
-  char * words[6];
-  parse_words(allwords, words);
-  for(int x = 0; x < 6; x++){
-    printf("/nword #%d is: ", x);
-    for(int y = 0; y < 6; y++){
-    }
-  }
+  char wordlist[100][27];
+  makelist(wordlist);
   return 0;
 }

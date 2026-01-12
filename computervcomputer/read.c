@@ -5,6 +5,26 @@
 #include <errno.h>
 #include <unistd.h>
 #include "errorfile.h"
+
+void readCSV(){
+  int csv_file;
+  int buffer;
+
+  csv_file = open("words.txt", O_RDONLY, 0611);
+  if (csv_file == -1){ err(); }
+
+  buffer = read(r_file, &buffer, sizeof(int));
+  if(buffer != sizeof(int)){
+    if(buffer == 0){
+      printf("nothing");
+    } else{
+        err();
+     }
+  }
+  printf("buffer = %s", buffer):
+
+}
+
 /*
 int readf(){
   int r_file;
