@@ -74,7 +74,7 @@ int main(int argc, char *argv[]){
         } else if (strlen(buff) < 6) {
             printf("at least 5 letters!\n\n");
         } else {
-            if (isValid(buff)) {
+            if (!isValid(buff)) {
                 printf("characters only!\n\n");
             } else {
                 break;
