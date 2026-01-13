@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 #include <sys/socket.h>
 #include <netdb.h>
+#include <time.h>
 
 #define YELLOW "\033[0;33m"
 #define GREEN "\033[0;32m"
