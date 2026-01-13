@@ -1,150 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <ctype.h>
 #include "wordle.h"
-#define BOLD_GREEN          "\033[1;32m"
+char wordlist[26][MAXWORDS][WORDLEN + 1];
+int word_count[26];
 
-int fileSize() {
-    FILE * fp = fopen("words.csv", "r");
-    if (fp == NULL) {
-        printf("file not found\n");
-        return -1;
-    }
-    fseek(fp, 0, SEEK_END);
-    int s = ftell(fp);
-    fclose(fp);
-    return s;
+void err(){
+    printf("errno %d\n", errno);
+    printf("%s\n", strerror(errno));
+    exit(1);
 }
 
-int isValid(char * word) { // 0 = invalid; 1 = valid
-    int v = 0;
+void read_CSV(FILE *csv_file){
+  char buffer[WORDLEN + 1];
 
-    // check if the word exists
-    FILE * f = fopen("words.csv", "r");
-    if (f == NULL) {
-        printf("file not found\n");
-        return -1;
+  while (fscanf(csv_file, "%5s", buffer) == 1) {
+    for (int i = 0; buffer[i]; i++) {
+      buffer[i] = tolower(buffer[i]);
     }
-    char line[6];
 
-    while (fgets(line, sizeof(line), f)) {
-        if (strncmp(word, line, 5) == 0) {
-            v = 1;
+    int col = buffer[0] - 'a';
+
+    if (col >= 0 && col < 26 && word_count[col] < MAXWORDS) {
+      strcpy(wordlist[col][word_count[col]], buffer);
+      word_count[col]++;
+    }
+  }
+}
+
+void make_list(char *file){
+  FILE *wordf = fopen(file, "r");
+  if (!wordf) {
+    perror("Couldn't open words.csv");
+    return;
+  }
+
+  for (int i = 0; i < 26; i++) {
+    word_count[i] = 0;
+  }
+
+  read_CSV(wordf);
+  fclose(wordf);
+}
+
+char *choose_randword(void){
+  int col = rand() % 26;
+  while (word_count[col] == 0) {
+      col = rand() % 26;
+  }
+
+  int i = rand() % word_count[col];
+  return wordlist[col][i];
+}
+
+void checkword(char *guess, char *targetword) {
+  printf("Checking word.. ");
+  for (int i = 0; i < WORDLEN; i++) {
+    char g = tolower(guess[i]);
+    char t = tolower(targetword[i]);
+
+    if (g == t) {
+      printf("[%c]", g);
+    } else {
+        int found_elsewhere = 0;
+        for (int j = 0; j < WORDLEN; j++) {
+          if (g == tolower(targetword[j])) {
+            found_elsewhere = 1;
             break;
-        }
+          }
+      }
+
+      if (found_elsewhere) {
+          printf("(%c)", g);
+      } else {
+          printf(" %c ", g);
+      }
     }
-    fclose(f);
-    return v;
+  }//for loop
+printf("\n");
 }
 
-// int isValid(char * word) { // 0 = invalid; 1 = valid
-//     int v = 0;
-//
-//     // length check
-//     if (strlen(word) > 6) {
-//         printf("no more than 5 letters!\n\n");
-//     } else if (strlen(word) < 6) {
-//         printf("at least 5 letters!\n\n");
-//     } else {
-//         // check if the word exists
-//         FILE * f = fopen("words.csv", "r");
-//         if (f == NULL) {
-//             printf("file not found\n");
-//             return -1;
-//         }
-//         char line[6];
-//
-//         while (fgets(line, sizeof(line), f)) {
-//             if (strncmp(word, line, 5) == 0) {
-//                 v = 1;
-//                 break;
-//             }
-//         }
-//         fclose(f);
-//     }
-//     return v;
-// }
+int validword(char *buffer) {
+  if (strlen(buffer) != WORDLEN) return 0;
 
-void chooseWord(char * w) {
-    // compute the number of lines in the file
-    int numWords = fileSize() / 7;
+  char temp[WORDLEN + 1];
+  for (int i = 0; i < WORDLEN; i++) temp[i] = tolower(buffer[i]);
+  temp[WORDLEN] = '\0';
 
-    // choose a random line
-    int l = rand() % (numWords + 1);
+  int col = temp[0] - 'a';
+  if (col < 0 || col >= 26) return 0;
 
-    // loop through to get
-    FILE * f = fopen("words.csv", "r");
-    if (f == NULL) {
-        perror("error opening file.");
-        return;
+  for (int i = 0; i < word_count[col]; i++) {
+    if (strcmp(wordlist[col][i], temp) == 0) {
+      strcpy(buffer, temp);
+      return 1;
     }
-    char word[7];
-    int line = 0;
-
-    while (fgets(word, sizeof(word), f)) {
-        line++;
-        if (line == l) {
-            word[strcspn(word, "\n")] = '\0'; // remove newline
-            strcpy(w, word);
-            break;
-        }
-    }
-    if (word[0] == '\0') {
-        strcpy(w, "error");
-    }
-    fclose(f);
+  }
+  return 0;
 }
 
-void printColor(char * ans, char * input) {
-    // green - matches
-    for (int i = 0; i < 6; i++) {
-        if (ans[i] == input[i]) {
-            printf("\033[1;32m%c\033[1;32m", ans[i]);
-        }
+void prompter(char *buffer, int attempt) {
+  char autoresponses[5][40] = {
+    "Please enter a valid 5-letter word: ",
+    "Type your second guess: ",
+    "Type your third guess: ",
+    "Type your fourth guess: ",
+    "Type your final guess: "
+  };
+
+  while (1) {
+    if (attempt < 5) {
+      printf("%s", autoresponses[attempt]);
+    } else {
+        printf("Enter a 5-letter word: ");
+     }
+
+    if (!fgets(buffer, BUFFERSIZE, stdin)) {
+      continue;
     }
-}
+    buffer[strcspn(buffer, "\n")] = '\0';
 
-int main(int argc, char *argv[]){
-    // let the user know we're choosing a word
-    printf("choosing a word...\n");
-    srand(time(NULL));
-    char w[7];
-    chooseWord(w);
-    while (strcmp("error", w) == 0) {
-        chooseWord(w);
-    }
-    sleep(1);
-    printf("word chosen: %s\n", w);
-
-    char buff[256];
-    while (1) {
-        printf("guess the 5-letter word.\n");
-
-        if (fgets(buff, sizeof(buff), stdin) == NULL) {
-           printf("exiting...\n");
-           break;
-        }
-
-        if (strlen(buff) > 6) {
-            printf("no more than 5 letters!\n\n");
-        } else if (strlen(buff) < 6) {
-            printf("at least 5 letters!\n\n");
-        } else {
-            if (!isValid(buff)) {
-                printf("I don't know this word. Try again.\n\n");
-            } else {
-                break;
-            }
-        }
+    if (validword(buffer)) {
+        break;
     }
 
-    printColor(w, buff);
-
-    // for (int guess = 1; guess < 7; guess++) {
-    //     if (strncmp(w, buff, 5) != 0) {
-    //         printf("Guess #%d: %s", guess, buff);
-    //         fgets(buff, sizeof(buff), stdin);
-    //     } else {
-    //         printf("correct!\n");
-    //     }
-    // }
-
-    return 0;
+    printf("Invalid word, try again.\n");
+  }
 }
