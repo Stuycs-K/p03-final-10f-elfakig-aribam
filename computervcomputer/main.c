@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <time.h>
 #include "wordle.h"
+#define READ 0
+#define WRITE 1
 
 int main(int argc, char *argv[]){
   srand(time(NULL));
@@ -19,6 +21,14 @@ int main(int argc, char *argv[]){
   printf("randword is %s\n", targetword);
 
   char buffer[BUFFERSIZE];
+
+  char fifoName[] = "childpipe";
+  mkfifo(fifoName, 0666);
+
+  int ptoc[2];
+
+    if (pid == 0) { // child
+    }else{}
 
   for (int i = 0; i < 5; i++) {
     prompter(buffer, i);
