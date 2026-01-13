@@ -57,19 +57,29 @@ char *choose_randword(void){
 
 void checkword(char *guess, char *targetword) {
   printf("Checking word.. ");
-    for (int i = 0; i < WORDLEN; i++) {
-      char g = tolower(guess[i]);
-      char t = tolower(targetword[i]);
-      if (g == t) {
-        printf("[%c]", g);
-      } else {
-        int found = 0;
-        for (int j = 0; j < WORDLEN; j++)
-            if (g == tolower(targetword[j])) found = 1;
-        printf(found ? "(%c)" : " %c ", g);
+  for (int i = 0; i < WORDLEN; i++) {
+    char g = tolower(guess[i]);
+    char t = tolower(targetword[i]);
+
+    if (g == t) {
+      printf("[%c]", g);
+    } else {
+        int found_elsewhere = 0;
+        for (int j = 0; j < WORDLEN; j++) {
+          if (g == tolower(targetword[j])) {
+            found_elsewhere = 1;
+            break;
+          }
       }
-  }
-    printf("\n");
+
+      if (found_elsewhere) {
+          printf("(%c)", g);
+      } else {
+          printf(" %c ", g);
+      }
+    }
+  }//for loop
+printf("\n");
 }
 
 int validword(char *buffer) {
