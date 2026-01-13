@@ -1,4 +1,5 @@
 #include "wordle.h"
+#define BOLD_GREEN          "\033[1;32m"
 
 int fileSize() {
     FILE * fp = fopen("words.csv", "r");
@@ -12,9 +13,10 @@ int fileSize() {
     return s;
 }
 
-int isValid(char * word) { // 0 = valid; 1 = invalid
+int isValid(char * word) { // 0 = invalid; 1 = valid
     int v = 0;
-    // start reading the file
+
+    // check if the word exists
     FILE * f = fopen("words.csv", "r");
     if (f == NULL) {
         printf("file not found\n");
@@ -28,10 +30,37 @@ int isValid(char * word) { // 0 = valid; 1 = invalid
             break;
         }
     }
-
     fclose(f);
     return v;
 }
+
+// int isValid(char * word) { // 0 = invalid; 1 = valid
+//     int v = 0;
+//
+//     // length check
+//     if (strlen(word) > 6) {
+//         printf("no more than 5 letters!\n\n");
+//     } else if (strlen(word) < 6) {
+//         printf("at least 5 letters!\n\n");
+//     } else {
+//         // check if the word exists
+//         FILE * f = fopen("words.csv", "r");
+//         if (f == NULL) {
+//             printf("file not found\n");
+//             return -1;
+//         }
+//         char line[6];
+//
+//         while (fgets(line, sizeof(line), f)) {
+//             if (strncmp(word, line, 5) == 0) {
+//                 v = 1;
+//                 break;
+//             }
+//         }
+//         fclose(f);
+//     }
+//     return v;
+// }
 
 void chooseWord(char * w) {
     // compute the number of lines in the file
@@ -66,6 +95,9 @@ void chooseWord(char * w) {
 void printColor(char * ans, char * input) {
     // green - matches
     for (int i = 0; i < 6; i++) {
+        if (ans[i] == input[i]) {
+            printf("\033[1;32m%c\033[1;32m", ans[i]);
+        }
     }
 }
 
@@ -83,11 +115,11 @@ int main(int argc, char *argv[]){
 
     char buff[256];
     while (1) {
-        printf("guess the 5-letter word.\nGuess #1: ");
+        printf("guess the 5-letter word.\n");
 
         if (fgets(buff, sizeof(buff), stdin) == NULL) {
-            printf("exiting...\n");
-            break;
+           printf("exiting...\n");
+           break;
         }
 
         if (strlen(buff) > 6) {
@@ -103,14 +135,16 @@ int main(int argc, char *argv[]){
         }
     }
 
-    for (int guess = 2; guess < 7; guess++) {
-        if (strncmp(w, buff, 5) != 0) {
-            printf("Guess #%d: %s", guess, buff);
-            fgets(buff, sizeof(buff), stdin);
-        } else {
-            printf("correct!\n");
-        }
-    }
+    printColor(w, buff);
+
+    // for (int guess = 1; guess < 7; guess++) {
+    //     if (strncmp(w, buff, 5) != 0) {
+    //         printf("Guess #%d: %s", guess, buff);
+    //         fgets(buff, sizeof(buff), stdin);
+    //     } else {
+    //         printf("correct!\n");
+    //     }
+    // }
 
     return 0;
 }
