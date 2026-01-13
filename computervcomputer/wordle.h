@@ -1,10 +1,11 @@
 #ifndef WORDLE_H
 #define WORDLE_H
+
 #define BUFFERSIZE 32
 #define WORDLEN 5
 #define MAXWORDS 264
-char wordlist[26][MAXWORDS][WORDLEN + 1];
-int word_count[26];
+
+
 
 char *choose_randword(void);
 void err();

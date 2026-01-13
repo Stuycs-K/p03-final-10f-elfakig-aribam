@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <ctype.h>
 #include "wordle.h"
+char wordlist[26][MAXWORDS][WORDLEN + 1];
+int word_count[26];
 
 void err(){
     printf("errno %d\n", errno);
@@ -86,7 +88,7 @@ int validword(char *buffer) {
   if (strlen(buffer) != WORDLEN) return 0;
 
   char temp[WORDLEN + 1];
-  for (int i = 0; i < WORDLEN; i++) temp[i] = tolower((unsigned char)buffer[i]);
+  for (int i = 0; i < WORDLEN; i++) temp[i] = tolower(buffer[i]);
   temp[WORDLEN] = '\0';
 
   int col = temp[0] - 'a';
