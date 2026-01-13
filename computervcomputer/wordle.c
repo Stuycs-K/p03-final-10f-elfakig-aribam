@@ -84,7 +84,7 @@ int validword(char *buffer) {
 
   for (int i = 0; i < word_count[col]; i++) {
     if (strcmp(wordlist[col][i], temp) == 0) {
-      strcpy(buffer, temp); 
+      strcpy(buffer, temp);
       return 1;
     }
   }

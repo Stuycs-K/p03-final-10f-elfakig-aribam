@@ -30,3 +30,11 @@ This document must be updated daily every time you finish a work session.
 * 5 mins - checked for null or exit commands
 * 5 mins - refined printed messages
 * 5 mins - organized files
+
+### 2026-01-12
+* 5 mins - organized files, removed unnecessary files, moved info into diff files
+* 10 mins - fixed isValid to check if word is in the list, updated main accordingly
+* 15 mins - fleshed out looping logic for guessing
+* 7 mins - fixed chooseWord to ensure a blank/error never occurs
+* 15 mins - tried to fix number of guesses logic; problem: input's validity is no longer being checked; succeeded in checking if the word itself matches the secret word
+* 5 mins - began checking the status of each letter (color); this is incomplete; I need to loop through each letter of the user's word and the program's word to ensure they match (green), are in the word (yellow), or are not in the word (blue).
