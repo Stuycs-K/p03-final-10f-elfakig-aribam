@@ -4,17 +4,118 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
-#include "read.h"
+#include <ctype.h>
+#include "wordle.h"
 
-void makelist(list[MAX_WORDS][WORDLEN + 1]){
-  for (int x = 1; x < 27; x++) {
-    wordlist[0][x - 1] = 96 + x;
-    printf("wordlist[0][%d] = %c\n", x - 1, wordlist[0][x - 1]);
+void err(){
+    printf("errno %d\n", errno);
+    printf("%s\n", strerror(errno));
+    exit(1);
+}
+
+void read_CSV(FILE *csv_file){
+  char buffer[WORDLEN + 1];
+
+  while (fscanf(csv_file, "%5s", buffer) == 1) {
+    for (int i = 0; buffer[i]; i++) {
+      buffer[i] = tolower(buffer[i]);
+    }
+
+    int col = buffer[0] - 'a';
+
+    if (col >= 0 && col < 26 && word_count[col] < MAXWORDS) {
+      strcpy(wordlist[col][word_count[col]], buffer);
+      word_count[col]++;
+    }
   }
-  wordlist[0][26] = '\0';
-  readCSV();
-  /*
-  strcpy(wordlist[1], "apple");
-  printf("wordlist[1] = %s\n", wordlist[1]);
-  */
+}
+
+void make_list(char *file){
+  FILE *wordf = fopen(file, "r");
+  if (!wordf) {
+    perror("Couldn't open words.csv");
+    return;
+  }
+
+  for (int i = 0; i < 26; i++) {
+    word_count[i] = 0;
+  }
+
+  read_CSV(wordf);
+  fclose(wordf);
+}
+
+char *choose_randword(void){
+  int col = rand() % 26;
+  while (word_count[col] == 0) {
+      col = rand() % 26;
+  }
+
+  int i = rand() % word_count[col];
+  return wordlist[col][i];
+}
+
+void checkword(char *guess, char *targetword) {
+  printf("Checking word.. ");
+    for (int i = 0; i < WORDLEN; i++) {
+      char g = tolower(guess[i]);
+      char t = tolower(targetword[i]);
+      if (g == t) {
+        printf("[%c]", g);
+      } else {
+        int found = 0;
+        for (int j = 0; j < WORDLEN; j++)
+            if (g == tolower(targetword[j])) found = 1;
+        printf(found ? "(%c)" : " %c ", g);
+      }
+  }
+    printf("\n");
+}
+
+int validword(char *buffer) {
+  if (strlen(buffer) != WORDLEN) return 0;
+
+  char temp[WORDLEN + 1];
+  for (int i = 0; i < WORDLEN; i++) temp[i] = tolower((unsigned char)buffer[i]);
+  temp[WORDLEN] = '\0';
+
+  int col = temp[0] - 'a';
+  if (col < 0 || col >= 26) return 0;
+
+  for (int i = 0; i < word_count[col]; i++) {
+    if (strcmp(wordlist[col][i], temp) == 0) {
+      strcpy(buffer, temp); 
+      return 1;
+    }
+  }
+  return 0;
+}
+
+void prompter(char *buffer, int attempt) {
+  char autoresponses[5][40] = {
+    "Please enter a valid 5-letter word: ",
+    "Type your second guess: ",
+    "Type your third guess: ",
+    "Type your fourth guess: ",
+    "Type your final guess: "
+  };
+
+  while (1) {
+    if (attempt < 5) {
+      printf("%s", autoresponses[attempt]);
+    } else {
+        printf("Enter a 5-letter word: ");
+     }
+
+    if (!fgets(buffer, BUFFERSIZE, stdin)) {
+      continue;
+    }
+    buffer[strcspn(buffer, "\n")] = '\0';
+
+    if (validword(buffer)) {
+        break;
+    }
+
+    printf("Invalid word, try again.\n");
+  }
 }

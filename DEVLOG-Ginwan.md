@@ -15,3 +15,9 @@ This document must be updated daily every time you finish a work session.
 ### 2026-01-08
 30min - worked on makelist and combining it with parse_args
 30min - currently working on reading & writing from a CSV file in continuation of makelist. Currently incomplete w some errors
+
+### 2026-01-12
+40min - decided that a 2D array won't work very well, began switching to a 3D array
+30min - fixed reading and writing words from the csv into the array, completely working
+20min - currently working on subsequent functions, such as randomizing words removing a word from the list ; didn't do removing word, not needed for now
+60min - made all the logic stuff, like checking if word is valid/correct. the game fully works!! 

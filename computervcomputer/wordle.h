@@ -1,12 +1,15 @@
 #ifndef WORDLE_H
 #define WORDLE_H
+#define BUFFERSIZE 32
 #define WORDLEN 5
-#define MAX_WORDS 5
+#define MAXWORDS 264
+char wordlist[26][MAXWORDS][WORDLEN + 1];
+int word_count[26];
 
-void makelist(char list[MAX_WORDS][WORDLEN + 1]);
-/*
-int load_csv_words(const char *filename, char wordlist[MAX_WORDS][WORD_LEN + 1]);
-char *parse_args(int argc, char *argv[]);
-void print_words(char wordlist[MAX_WORDS][WORD_LEN + 1], int count);
-*/
+char *choose_randword(void);
+void err();
+void make_list(char *file);
+void checkword(char *guess, char *target);
+int validword(char * buffer);
+void prompter(char *buffer, int attempt);
 #endif
