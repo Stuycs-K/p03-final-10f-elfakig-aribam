@@ -38,3 +38,11 @@ This document must be updated daily every time you finish a work session.
 * 7 mins - fixed chooseWord to ensure a blank/error never occurs
 * 15 mins - tried to fix number of guesses logic; problem: input's validity is no longer being checked; succeeded in checking if the word itself matches the secret word
 * 5 mins - began checking the status of each letter (color); this is incomplete; I need to loop through each letter of the user's word and the program's word to ensure they match (green), are in the word (yellow), or are not in the word (blue).
+
+### 2026-01-13
+* 10 mins - updated printColor and isValid; attempt to make isValid a part of the asking process
+* 5 mins - continued working on wordle.c, failed to loop to ask user for guesses in a coherent manner
+* 10 mins - integrated Ginwan's working wordle.c with mine (+ moved, copied files)
+* 10 mins - added colors (green for correct position, yellow for misplaced letter) to the terminal using ANSI escape sequences
+* 10 mins - fixed some bugs: Ctrl-D exits, removed error-causing code
+* 5 mins - organized libraries and files
