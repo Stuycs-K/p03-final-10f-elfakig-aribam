@@ -5,6 +5,11 @@
 #include <errno.h>
 #include <unistd.h>
 #include <time.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "wordle.h"
 #define READ 0
 #define WRITE 1
@@ -12,17 +17,17 @@
 int main(int argc, char *argv[]){
   srand(time(NULL));
   make_list("words.csv");
+  char buffer[BUFFERSIZE];
+  char fifoName[] = "pipe";
+
   /*for(int a = 0; a < 1; a++){
     for(int i = 0; i < word_count[a]; i++){
       printf("wordlist[%d][%d][6] = %s\n", a, i, wordlist[a][i]);
     }
   }*/
   char * targetword = choose_randword();
-  printf("randword is %s\n", targetword);
+  //printf("randword is %s\n", targetword);
 
-  char buffer[BUFFERSIZE];
-
-  char fifoName[] = "childpipe";
   mkfifo(fifoName, 0666);
 
   int ptoc[2];
