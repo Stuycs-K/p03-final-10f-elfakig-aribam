@@ -14,3 +14,20 @@
 #define YELLOW "\033[0;33m"
 #define GREEN "\033[0;32m"
 #define BLUE "\033[0;34m"
+
+#ifndef WORDLE_H
+#define WORDLE_H
+
+#define BUFFERSIZE 32
+#define WORDLEN 5
+#define MAXWORDS 264
+
+
+
+char *choose_randword(void);
+void err();
+void make_list(char *file);
+void checkword(char *guess, char *target);
+int validword(char * buffer);
+void prompter(char *buffer, int attempt);
+#endif

@@ -10,9 +10,9 @@ char wordlist[26][MAXWORDS][WORDLEN + 1];
 int word_count[26];
 
 void err(){
-    printf("errno %d\n", errno);
-    printf("%s\n", strerror(errno));
-    exit(1);
+  printf("errno %d\n", errno);
+  printf("%s\n", strerror(errno));
+  exit(1);
 }
 
 void read_CSV(FILE *csv_file){
@@ -64,7 +64,7 @@ void checkword(char *guess, char *targetword) {
     char t = tolower(targetword[i]);
 
     if (g == t) {
-      printf("[%c]", g);
+      printf("\033[0;32m%c \033[0;32m\e[0;37m", g);
     } else {
         int found_elsewhere = 0;
         for (int j = 0; j < WORDLEN; j++) {
@@ -75,9 +75,9 @@ void checkword(char *guess, char *targetword) {
       }
 
       if (found_elsewhere) {
-          printf("(%c)", g);
+          printf("\033[0;33m%c \033[0;33m\e[0;37m", g);
       } else {
-          printf(" %c ", g);
+          printf("%c ", g);
       }
     }
   }//for loop
@@ -104,23 +104,25 @@ int validword(char *buffer) {
 }
 
 void prompter(char *buffer, int attempt) {
-  char autoresponses[5][40] = {
+  char autoresponses[6][40] = {
     "Please enter a valid 5-letter word: ",
     "Type your second guess: ",
     "Type your third guess: ",
     "Type your fourth guess: ",
+    "Type your fifth guess: ",
     "Type your final guess: "
   };
 
   while (1) {
-    if (attempt < 5) {
+    if (attempt < 6) {
       printf("%s", autoresponses[attempt]);
     } else {
         printf("Enter a 5-letter word: ");
      }
 
     if (!fgets(buffer, BUFFERSIZE, stdin)) {
-      continue;
+      printf("exiting...");
+      return;
     }
     buffer[strcspn(buffer, "\n")] = '\0';
 
