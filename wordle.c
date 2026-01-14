@@ -1,11 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <unistd.h>
-#include <ctype.h>
 #include "wordle.h"
+
 char wordlist[26][MAXWORDS][WORDLEN + 1];
 int word_count[26];
 
