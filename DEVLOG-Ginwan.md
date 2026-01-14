@@ -24,4 +24,7 @@ This document must be updated daily every time you finish a work session.
 
 ### 2026-01-13
 20min - not working properly on lab computer, fixed errors
-20min - spent time figuring out next functions to implement and divided work. Began adding forking and unnamed pipes,  where child reads stdin and prompts parent for response/checking word. 
+20min - spent time figuring out next functions to implement and divided work. Began adding forking and unnamed pipes,  where child reads stdin and prompts parent for response/checking word.
+
+### 2026-01-14
+40min - got forking and pipes to do basic stuff, like parent prompting user and child, reading their responses, and then replying. Its going to be child versus user, where the parent acts like the server instead.
