@@ -1,5 +1,6 @@
 #include "wordle.h"
 
+#define MAXWORDS fileSize("words.csv") / 7;
 char wordlist[26][MAXWORDS][WORDLEN + 1];
 int word_count[26];
 
@@ -7,6 +8,18 @@ void err(){
   printf("errno %d\n", errno);
   printf("%s\n", strerror(errno));
   exit(1);
+}
+
+int fileSize(char * filename) {
+    FILE * fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("file not found\n");
+        return -1;
+    }
+    fseek(fp, 0, SEEK_END);
+    int s = ftell(fp);
+    fclose(fp);
+    return s;
 }
 
 void read_CSV(FILE *csv_file){

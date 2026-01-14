@@ -46,3 +46,9 @@ This document must be updated daily every time you finish a work session.
 * 10 mins - added colors (green for correct position, yellow for misplaced letter) to the terminal using ANSI escape sequences
 * 10 mins - fixed some bugs: Ctrl-D exits, removed error-causing code
 * 5 mins - organized libraries and files
+
+### 2026-01-14
+* 5 mins - tested
+* 5 mins - discussion on what to add to project
+* 10 mins - figuring out logic: calculate fileSize -> calculate number of words, change randomization/search to use the number of lines/words
+* 10 mins - updated file organization, added different language libraries
