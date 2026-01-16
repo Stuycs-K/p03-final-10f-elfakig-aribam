@@ -52,3 +52,10 @@ This document must be updated daily every time you finish a work session.
 * 5 mins - discussion on what to add to project
 * 10 mins - figuring out logic: calculate fileSize -> calculate number of words, change randomization/search to use the number of lines/words
 * 10 mins - updated file organization, added different language libraries
+* 10 mins - tried to fix scoping issue by turning global variables into local ones and including them in function parameters
+* 5 mins - attempt at using extern to declare global array across files
+
+### 2026-01-15
+* 30  mins - changed and experimented with function signatures, declared maxwords and wordlist in main.c then used that within each function call that used wordlist and maxword. This was done without allocating memory dynamically, and resulted in a lot of errors because there was a type mismatch between char ***
+* NOTE: there are no commits during this period (after class 1/14 - at home 1/15) because I accidentally began working on the main branch, and didn't want to push broken code before resolving the errors.
+* 20 mins - replaced the inner arrays of wordlist with dynamically-allocated arrays (using calloc) after calculating the maximum number of words;

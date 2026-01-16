@@ -1,3 +1,6 @@
+#ifndef WORDLE_H
+#define WORDLE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -14,19 +17,15 @@
 
 #define YELLOW "\033[0;33m"
 #define GREEN "\033[0;32m"
-
-#ifndef WORDLE_H
-#define WORDLE_H
-
 #define BUFFERSIZE 32
 #define WORDLEN 5
 
+int fileSize(char * filename);
+void err(void);
 
-
-char *choose_randword(void);
-void err();
-void make_list(char *file);
+char *choose_randword(char ***wordlist);
+void make_list(char *file, char ***wordlist, int maxwords);
 void checkword(char *guess, char *target);
-int validword(char * buffer);
-void prompter(char *buffer, int attempt);
+int validword(char * buffer, char ***wordlist);
+void prompter(char *buffer, int attempt, char***);
 #endif

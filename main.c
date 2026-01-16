@@ -10,20 +10,29 @@
 #define WRITE 1
 
 int main(int argc, char *argv[]){
-  srand(time(NULL));
-  make_list("words.csv");
-  /*for(int a = 0; a < 1; a++){
-    for(int i = 0; i < word_count[a]; i++){
-      printf("wordlist[%d][%d][6] = %s\n", a, i, wordlist[a][i]);
+  int maxwords = fileSize("words.csv") / 7;
+  char ***wordlist = calloc(26, sizeof(char **));
+  if (!wordlist) err();
+  // allocate the wordlist's inner arrays
+  for (int i = 0; i < 26; i++) {
+    wordlist[i] = calloc(maxwords, sizeof(char *));
+    if (!wordlist[i]) err();
+
+    for (int j = 0; j < maxwords; j++) {
+      wordlist[i][j] = calloc(WORDLEN + 1, sizeof(char));
+      if (!wordlist[i][j]) err();
     }
-  }*/
-  char * targetword = choose_randword();
+  }
+
+  srand(time(NULL));
+  make_list("words.csv", wordlist, maxwords);
+  char * targetword = choose_randword(wordlist);
   printf("randword is %s\n", targetword);
 
   char buffer[BUFFERSIZE];
 
-  for (int i = 0; i < 5; i++) {
-    prompter(buffer, i);
+  for (int i = 0; i < 6; i++) {
+    prompter(buffer, i, wordlist);
     checkword(buffer, targetword);
 
     if (strcmp(buffer, targetword) == 0) {
@@ -31,9 +40,17 @@ int main(int argc, char *argv[]){
       break;
     }
 
-    if (i == 4) {
+    if (i == 5) {
       printf("Sorry, the word was: %s\n", targetword);
     }
   }
+
+  for (int i = 0; i < 26; i++) {
+    for (int j = 0; j < maxwords; j++) {
+      free(wordlist[i][j]);
+    }
+    free(wordlist[i]);
+  }
+  free(wordlist);
   return 0;
 }

@@ -1,14 +1,6 @@
 #include "wordle.h"
 
-#define MAXWORDS fileSize("words.csv") / 7;
-char wordlist[26][MAXWORDS][WORDLEN + 1];
 int word_count[26];
-
-void err(){
-  printf("errno %d\n", errno);
-  printf("%s\n", strerror(errno));
-  exit(1);
-}
 
 int fileSize(char * filename) {
     FILE * fp = fopen(filename, "r");
@@ -22,7 +14,13 @@ int fileSize(char * filename) {
     return s;
 }
 
-void read_CSV(FILE *csv_file){
+void err() {
+  printf("errno %d\n", errno);
+  printf("%s\n", strerror(errno));
+  exit(1);
+}
+
+void read_CSV(FILE *csv_file, char ***wordlist, int maxwords){
   char buffer[WORDLEN + 1];
 
   while (fscanf(csv_file, "%5s", buffer) == 1) {
@@ -32,14 +30,14 @@ void read_CSV(FILE *csv_file){
 
     int col = buffer[0] - 'a';
 
-    if (col >= 0 && col < 26 && word_count[col] < MAXWORDS) {
+    if (col >= 0 && col < 26 && word_count[col] < maxwords) {
       strcpy(wordlist[col][word_count[col]], buffer);
       word_count[col]++;
     }
   }
 }
 
-void make_list(char *file){
+void make_list(char *file, char ***wordlist, int maxwords){
   FILE *wordf = fopen(file, "r");
   if (!wordf) {
     perror("Couldn't open words.csv");
@@ -50,11 +48,11 @@ void make_list(char *file){
     word_count[i] = 0;
   }
 
-  read_CSV(wordf);
+  read_CSV(wordf, wordlist, maxwords);
   fclose(wordf);
 }
 
-char *choose_randword(void){
+char *choose_randword(char ***wordlist){
   int col = rand() % 26;
   while (word_count[col] == 0) {
       col = rand() % 26;
@@ -91,7 +89,7 @@ void checkword(char *guess, char *targetword) {
 printf("\n");
 }
 
-int validword(char *buffer) {
+int validword(char *buffer, char ***wordlist) {
   if (strlen(buffer) != WORDLEN) return 0;
 
   char temp[WORDLEN + 1];
@@ -110,7 +108,7 @@ int validword(char *buffer) {
   return 0;
 }
 
-void prompter(char *buffer, int attempt) {
+void prompter(char *buffer, int attempt, char ***wordlist) {
   char autoresponses[6][40] = {
     "Please enter a valid 5-letter word: ",
     "Type your second guess: ",
@@ -133,7 +131,7 @@ void prompter(char *buffer, int attempt) {
     }
     buffer[strcspn(buffer, "\n")] = '\0';
 
-    if (validword(buffer)) {
+    if (validword(buffer, wordlist)) {
         break;
     }
 
