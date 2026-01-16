@@ -62,3 +62,4 @@ This document must be updated daily every time you finish a work session.
 * 5 mins - cleaned up headers/libraries, added variables for colors
 * 5 mins - fixed exits/erros and added a signal for interruption via Ctrl-C
 * 15 mins - implemented a hard mode with a timer using signals
+* 20 mins - generated lists of 5-letter words in different languages and incorporated those

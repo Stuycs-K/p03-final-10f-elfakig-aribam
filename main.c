@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
 
   // ask which language
   char * dict;
-  printf("Choose a dictionary - English (e), Spanish (s): ");
+  printf("Choose a dictionary - English (e), Spanish (s), French (f), Italian (i), Dutch (d), Tagalog (t): ");
   while (fgets(buffer, BUFFERSIZE, stdin)) {
     if (buffer[0] == 'e') {
       printf("You chose English.\n");
