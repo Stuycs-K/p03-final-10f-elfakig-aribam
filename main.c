@@ -79,7 +79,6 @@ int main(int argc, char *argv[]){
   }
   make_list(dict, wordlist, maxwords);
   char * targetword = choose_randword(wordlist);
-  printf("randword is %s\n", targetword);
 
   // hard mode option - timer
   int hard_mode = 0; // default: no
