@@ -28,3 +28,7 @@ This document must be updated daily every time you finish a work session.
 
 ### 2026-01-14
 40min - got forking and pipes to do basic stuff, like parent prompting user and child, reading their responses, and then replying. Its going to be child versus user, where the parent acts like the server instead.
+
+### 2026-01-15
+30min - realized that its too late to add forking and completely breaks program so decided to remove (also no guarantee it will work on lab computers since its kind of last second)
+10min - reorganizing things
