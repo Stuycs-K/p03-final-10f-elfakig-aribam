@@ -61,3 +61,4 @@ This document must be updated daily every time you finish a work session.
 * 20 mins - replaced the inner arrays of wordlist with dynamically-allocated arrays (using calloc) after calculating the maximum number of words;
 * 5 mins - cleaned up headers/libraries, added variables for colors
 * 5 mins - fixed exits/erros and added a signal for interruption via Ctrl-C
+* 15 mins - implemented a hard mode with a timer using singals
