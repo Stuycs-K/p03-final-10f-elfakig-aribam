@@ -9,8 +9,15 @@ void handle_sigint(int sig) {
   exit(0);
 }
 
+void handle_alarm(int sig) {
+  (void)sig;
+  printf("\n Time's up! Game over.\n");
+  exit(0);
+}
+
 int main(int argc, char *argv[]){
-  signal(SIGINT, handle_sigint);
+  signal(SIGINT, handle_sigint); // quit
+  signal(SIGALRM, handle_alarm); // timer
 
   int maxwords = fileSize("words.csv") / 7;
   char ***wordlist = calloc(26, sizeof(char **));
@@ -33,8 +40,22 @@ int main(int argc, char *argv[]){
 
   char buffer[BUFFERSIZE];
 
+  // hard mode option - timer
+  int hard_mode = 0; // default: no
+  char choice;
+  printf("Enable hard mode? (y/n): ");
+  if (fgets(buffer, BUFFERSIZE, stdin)) {
+    if (buffer[0] == 'y') {
+      printf("Hard mode enabled. You have 20 secs to type each guess.\n");
+      hard_mode = 1;
+    }
+  }
+
   for (int i = 0; i < 6; i++) {
+    if (hard_mode) alarm(20);
+
     prompter(buffer, i, wordlist);
+    if (hard_mode) alarm(0);
     checkword(buffer, targetword);
 
     if (strcmp(buffer, targetword) == 0) {
