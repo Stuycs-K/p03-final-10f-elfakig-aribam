@@ -40,7 +40,7 @@ void read_CSV(FILE *csv_file, char ***wordlist, int maxwords){
 void make_list(char *file, char ***wordlist, int maxwords){
   FILE *wordf = fopen(file, "r");
   if (!wordf) {
-    perror("Couldn't open words.csv");
+    perror("Couldn't open dictionary");
     return;
   }
 

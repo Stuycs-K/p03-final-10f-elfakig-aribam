@@ -19,7 +19,27 @@ int main(int argc, char *argv[]){
   signal(SIGINT, handle_sigint); // quit
   signal(SIGALRM, handle_alarm); // timer
 
-  int maxwords = fileSize("words.csv") / 7;
+  char buffer[BUFFERSIZE];
+  srand(time(NULL));
+
+  // ask which language
+  char * dict;
+  printf("Choose a dictionary - English (e), Spanish (s): ");
+  while (fgets(buffer, BUFFERSIZE, stdin)) {
+    if (buffer[0] == 'e') {
+      printf("You chose English.\n");
+      dict = "words.csv";
+      break;
+    } else if (buffer[0] == 's') {
+      printf("You chose Spanish.\n");
+      dict = "spanish.csv";
+      break;
+    } else {
+      printf("Please choose English or Spanish.");
+    }
+  }
+
+  int maxwords = fileSize(dict) / 7;
   char ***wordlist = calloc(26, sizeof(char **));
   if (!wordlist) err();
   // allocate the wordlist's inner arrays
@@ -32,13 +52,9 @@ int main(int argc, char *argv[]){
       if (!wordlist[i][j]) err();
     }
   }
-
-  srand(time(NULL));
-  make_list("words.csv", wordlist, maxwords);
+  make_list(dict, wordlist, maxwords);
   char * targetword = choose_randword(wordlist);
   printf("randword is %s\n", targetword);
-
-  char buffer[BUFFERSIZE];
 
   // hard mode option - timer
   int hard_mode = 0; // default: no
