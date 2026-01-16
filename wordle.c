@@ -69,7 +69,7 @@ void checkword(char *guess, char *targetword) {
     char t = tolower(targetword[i]);
 
     if (g == t) {
-      printf("\033[0;32m%c \033[0;32m\e[0;37m", g);
+      printf(GREEN "%c " RESET, g);
     } else {
         int found_elsewhere = 0;
         for (int j = 0; j < WORDLEN; j++) {
@@ -80,7 +80,7 @@ void checkword(char *guess, char *targetword) {
       }
 
       if (found_elsewhere) {
-          printf("\033[0;33m%c \033[0;33m\e[0;37m", g);
+          printf(YELLOW "%c " RESET, g);;
       } else {
           printf("%c ", g);
       }
