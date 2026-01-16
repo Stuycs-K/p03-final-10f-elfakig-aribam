@@ -9,15 +9,13 @@
 #include <string.h>
 #include <errno.h>
 #include <signal.h>
-#include <sys/wait.h>
-#include <sys/socket.h>
 #include <netdb.h>
 #include <time.h>
 #include <ctype.h>
 
 #define YELLOW "\033[0;33m"
 #define GREEN "\033[0;32m"
-#define RESET "\033[0;37m"
+#define RESET "\033[0;37m" // white
 #define BUFFERSIZE 32
 #define WORDLEN 5
 

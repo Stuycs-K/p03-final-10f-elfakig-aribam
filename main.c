@@ -3,7 +3,15 @@
 #define READ 0
 #define WRITE 1
 
+void handle_sigint(int sig) {
+  (void)sig;
+  printf("\nGiving up? Program was interrupted.\n");
+  exit(0);
+}
+
 int main(int argc, char *argv[]){
+  signal(SIGINT, handle_sigint);
+
   int maxwords = fileSize("words.csv") / 7;
   char ***wordlist = calloc(26, sizeof(char **));
   if (!wordlist) err();

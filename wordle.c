@@ -77,16 +77,16 @@ void checkword(char *guess, char *targetword) {
             found_elsewhere = 1;
             break;
           }
-      }
+        }
 
-      if (found_elsewhere) {
-          printf(YELLOW "%c " RESET, g);;
-      } else {
-          printf("%c ", g);
+        if (found_elsewhere) {
+            printf(YELLOW "%c " RESET, g);;
+        } else {
+            printf("%c ", g);
+        }
       }
     }
-  }//for loop
-printf("\n");
+  printf("\n");
 }
 
 int validword(char *buffer, char ***wordlist) {
@@ -126,8 +126,8 @@ void prompter(char *buffer, int attempt, char ***wordlist) {
      }
 
     if (!fgets(buffer, BUFFERSIZE, stdin)) {
-      printf("exiting...");
-      return;
+      printf("\nexiting...\n");
+      exit(0);
     }
     buffer[strcspn(buffer, "\n")] = '\0';
 
