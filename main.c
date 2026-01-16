@@ -24,15 +24,43 @@ int main(int argc, char *argv[]){
 
   // ask which language
   char * dict;
-  printf("Choose a dictionary - English (e), Spanish (s), French (f), Italian (i), Dutch (d), Tagalog (t): ");
+  printf("Choose a dictionary - Arabic (a), Bengali (b), Dutch (d), English (e), French (f), Italian (i), Spanish (s), Tagalog (t), Vietnamese (v): ");
   while (fgets(buffer, BUFFERSIZE, stdin)) {
     if (buffer[0] == 'e') {
       printf("You chose English.\n");
-      dict = "words.csv";
+      dict = "dicts/english.csv";
       break;
     } else if (buffer[0] == 's') {
       printf("You chose Spanish.\n");
-      dict = "spanish.csv";
+      dict = "dicts/spanish.csv";
+      break;
+    } else if (buffer[0] == 'a') {
+      printf("You chose Arabic.\n");
+      dict = "dicts/arabic.csv";
+      break;
+    } else if (buffer[0] == 'b') {
+      printf("You chose Bengali.\n");
+      dict = "dicts/bengali.csv";
+      break;
+    } else if (buffer[0] == 'd') {
+      printf("You chose Dutch.\n");
+      dict = "dicts/dutch.csv";
+      break;
+    } else if (buffer[0] == 'f') {
+      printf("You chose French.\n");
+      dict = "dicts/french.csv";
+      break;
+    } else if (buffer[0] == 'i') {
+      printf("You chose Italian.\n");
+      dict = "dicts/italian.csv";
+      break;
+    } else if (buffer[0] == 't') {
+      printf("You chose Tagalog.\n");
+      dict = "dicts/tagalog.csv";
+      break;
+    } else if (buffer[0] == 'v') {
+      printf("You chose Vietnamese.\n");
+      dict = "dicts/vietnamese.csv";
       break;
     } else {
       printf("Please choose English or Spanish.");
