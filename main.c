@@ -1,8 +1,5 @@
 #include "wordle.h"
 
-#define READ 0
-#define WRITE 1
-
 void handle_sigint(int sig) {
   (void)sig;
   printf("\nGiving up? Program was interrupted.\n");
